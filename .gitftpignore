@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/*
+.git-ftp-ignore
+.gitftpignore
+.gitignore
+bower.json
+composer.json
+composer.lock
+Gruntfile.js
+package.json
+

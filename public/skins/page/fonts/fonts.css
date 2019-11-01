@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Ikaros Sans';
+    src: url('Ikaros-Regular.woff2') format('woff2'),
+        url('Ikaros-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bebas Neue Book';
+    src: url('BebasNeueBook.woff2') format('woff2'),
+        url('BebasNeueBook.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
