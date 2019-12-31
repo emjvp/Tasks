@@ -7,20 +7,43 @@
 		            <label>Nombre</label>
 		            <label class="input-group">
 							<div class="input-group-prepend">
-								<span class="input-group-text input-icono fondo-cafe " ><i class="fas fa-pencil-alt"></i></span>
+								<span class="input-group-text input-icono fondo-verde " ><i class="fas fa-pencil-alt"></i></span>
 							</div>
 		            <input type="text" class="form-control" name="nombre" value="<?php echo $this->getObjectVariable($this->filters, 'nombre') ?>"></input>
+		            </label>
+		        </div>
+				<div class="col-3">
+		            <label>Descripcion</label>
+		            <label class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text input-icono fondo-verde-claro " ><i class="fas fa-pencil-alt"></i></span>
+							</div>
+		            <input type="text" class="form-control" name="descripcion" value="<?php echo $this->getObjectVariable($this->filters, 'descripcion') ?>"></input>
 		            </label>
 		        </div>
 				<div class="col-3">
 		            <label>Imagen</label>
 		            <label class="input-group">
 							<div class="input-group-prepend">
-								<span class="input-group-text input-icono fondo-morado " ><i class="fas fa-pencil-alt"></i></span>
+								<span class="input-group-text input-icono fondo-azul-claro " ><i class="fas fa-pencil-alt"></i></span>
 							</div>
 		            <input type="text" class="form-control" name="imagen" value="<?php echo $this->getObjectVariable($this->filters, 'imagen') ?>"></input>
 		            </label>
 		        </div>
+				<div class="col-3">
+					<label>Estado</label>
+	                <label class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text input-icono fondo-rojo-claro " ><i class="far fa-list-alt"></i></span>
+						</div>
+	                    <select class="form-control" name="estado">
+	                        <option value="">Todas</option>
+	                        <?php foreach ($this->list_estado as $key => $value) : ?>
+	                            <option value="<?= $key; ?>" <?php if ($this->getObjectVariable($this->filters, 'estado') ==  $key) { echo "selected";} ?>><?= $value; ?></option>
+	                        <?php endforeach ?>
+	                    </select>
+	               </label>
+	            </div>
                 <div class="col-3">
                     <label>&nbsp;</label>
                     <button type="submit" class="btn btn-block btn-azul"> <i class="fas fa-filter"></i> Filtrar</button>
@@ -78,8 +101,9 @@
 			<thead>
 				<tr>
 					<td>Nombre</td>
+					<td>Descripcion</td>
 					<td>Imagen</td>
-					<td width="100">Orden</td>
+					<td>Estado</td>
 					<td width="100"></td>
 				</tr>
 			</thead>
@@ -88,17 +112,14 @@
 				<?php $id =  $content->id; ?>
 					<tr>
 						<td><?=$content->nombre;?></td>
+						<td><?=$content->descripcion;?></td>
 						<td>
 							<?php if($content->imagen) { ?>
 								<img src="/images/<?= $content->imagen; ?>"  class="img-thumbnail thumbnail-administrator" />
 							<?php } ?>
 							<div><?= $content->imagen; ?></div>
 						</td>
-						<td>
-							<input type="hidden" id="<?= $id; ?>" value="<?= $content->orden; ?>"></input>
-							<button class="up_table btn btn-primary btn-sm"><i class="fas fa-angle-up"></i></button>
-							<button class="down_table btn btn-primary btn-sm"><i class="fas fa-angle-down"></i></button>
-						</td>
+						<td><?= $this->list_estado[$content->estado];?>
 						<td class="text-right">
 							<div>
 								<a class="btn btn-azul btn-sm" href="<?php echo $this->route;?>/manage?id=<?= $id ?>" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-pen-alt"></i></a>
@@ -128,7 +149,7 @@
 			</tbody>
 		</table>
 	</div>
-	<input type="hidden" id="csrf" value="<?php echo $this->csrf ?>"><input type="hidden" id="order-route" value="<?php echo $this->route; ?>/order"><input type="hidden" id="page-route" value="<?php echo $this->route; ?>/changepage">
+	<input type="hidden" id="csrf" value="<?php echo $this->csrf ?>"><input type="hidden" id="page-route" value="<?php echo $this->route; ?>/changepage">
 	</div>
 	 <div align="center">
 		<ul class="pagination justify-content-center">

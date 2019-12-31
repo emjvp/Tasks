@@ -60,9 +60,7 @@
     <header>
         <div class="container-fluid">
             <div class="row align-items-center">
-                <div class="col-2">
-                    <img src="/skins/administracion/images/logocolzuiza.jpeg" class="logo-blanco">
-                </div>
+                
                 <div class="col-10">
                     <?= $this->_data['panel_header']; ?>
                 </div>

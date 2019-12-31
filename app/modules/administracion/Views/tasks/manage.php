@@ -8,14 +8,19 @@
 				<input type="hidden" name="id" id="id" value="<?= $this->content->id; ?>" />
 			<?php }?>
 			<div class="row">
-				<div class="col-6 form-group">
+				<div class="col-12 form-group">
 					<label for="nombre"  class="control-label">Nombre</label>
 					<label class="input-group">
 						<div class="input-group-prepend">
-							<span class="input-group-text input-icono  fondo-rojo-claro " ><i class="fas fa-pencil-alt"></i></span>
+							<span class="input-group-text input-icono  fondo-cafe " ><i class="fas fa-pencil-alt"></i></span>
 						</div>
 						<input type="text" value="<?= $this->content->nombre; ?>" name="nombre" id="nombre" class="form-control"  required >
 					</label>
+					<div class="help-block with-errors"></div>
+				</div>
+				<div class="col-12 form-group">
+					<label for="descripcion" class="form-label" >Descripcion</label>
+					<textarea name="descripcion" id="descripcion"   class="form-control tinyeditor" rows="10"  required ><?= $this->content->descripcion; ?></textarea>
 					<div class="help-block with-errors"></div>
 				</div>
 				<div class="col-6 form-group">
@@ -28,6 +33,21 @@
 							<div><button class="btn btn-danger btn-sm" type="button" onclick="eliminarImagen('imagen','<?php echo $this->route."/deleteimage"; ?>')"><i class="glyphicon glyphicon-remove" ></i> Eliminar Imagen</button></div>
 						</div>
 					<?php } ?>
+				</div>
+				<div class="col-6 form-group">
+					<label class="control-label">Estado</label>
+					<label class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text input-icono  fondo-azul-claro " ><i class="far fa-list-alt"></i></span>
+						</div>
+						<select class="form-control" name="estado"  required >
+							<option value="">Seleccione...</option>
+							<?php foreach ($this->list_estado AS $key => $value ){?>
+								<option <?php if($this->getObjectVariable($this->content,"estado") == $key ){ echo "selected"; }?> value="<?php echo $key; ?>" /> <?= $value; ?></option>
+							<?php } ?>
+						</select>
+					</label>
+					<div class="help-block with-errors"></div>
 				</div>
 			</div>
 		</div>

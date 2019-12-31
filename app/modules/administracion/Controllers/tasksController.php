@@ -79,7 +79,7 @@ class Administracion_tasksController extends Administracion_mainController
 		$filters =(object)Session::getInstance()->get($this->namefilter);
         $this->_view->filters = $filters;
 		$filters = $this->getFilter();
-		$order = "orden ASC";
+		$order = "";
 		$list = $this->mainModel->getList($filters,$order);
 		$amount = $this->pages;
 		$page = $this->_getSanitizedParam("page");
@@ -100,6 +100,7 @@ class Administracion_tasksController extends Administracion_mainController
 		$this->_view->page = $page;
 		$this->_view->lists = $this->mainModel->getListPages($filters,$order,$start,$amount);
 		$this->_view->csrf_section = $this->_csrf_section;
+		$this->_view->list_estado = $this->getEstado();
 	}
 
 	/**
@@ -114,6 +115,7 @@ class Administracion_tasksController extends Administracion_mainController
 		$this->_csrf->generateCode($this->_csrf_section);
 		$this->_view->csrf_section = $this->_csrf_section;
 		$this->_view->csrf = Session::getInstance()->get('csrf')[$this->_csrf_section];
+		$this->_view->list_estado = $this->getEstado();
 		$id = $this->_getSanitizedParam("id");
 		if ($id > 0) {
 			$content = $this->mainModel->getById($id);
@@ -152,7 +154,7 @@ class Administracion_tasksController extends Administracion_mainController
 				$data['imagen'] = $uploadImage->upload("imagen");
 			}
 			$id = $this->mainModel->insert($data);
-			$this->mainModel->changeOrder($id,$id);
+			
 			$data['id']= $id;
 			$data['log_log'] = print_r($data,true);
 			$data['log_tipo'] = 'CREAR TASKS';
@@ -231,9 +233,25 @@ class Administracion_tasksController extends Administracion_mainController
 	{
 		$data = array();
 		$data['nombre'] = $this->_getSanitizedParam("nombre");
+		$data['descripcion'] = $this->_getSanitizedParamHtml("descripcion");
 		$data['imagen'] = "";
+		$data['estado'] = $this->_getSanitizedParam("estado");
 		return $data;
 	}
+
+	/**
+     * Genera los valores del campo Estado.
+     *
+     * @return array cadena con los valores del campo Estado.
+     */
+	private function getEstado()
+	{
+		$array = array();
+		$array['1'] = 'activo';
+		$array['2'] = 'inactivo';
+		return $array;
+	}
+
 	/**
      * Genera la consulta con los filtros de este controlador.
      *
@@ -247,8 +265,14 @@ class Administracion_tasksController extends Administracion_mainController
             if ($filters->nombre != '') {
                 $filtros = $filtros." AND nombre LIKE '%".$filters->nombre."%'";
             }
+            if ($filters->descripcion != '') {
+                $filtros = $filtros." AND descripcion LIKE '%".$filters->descripcion."%'";
+            }
             if ($filters->imagen != '') {
                 $filtros = $filtros." AND imagen LIKE '%".$filters->imagen."%'";
+            }
+            if ($filters->estado != '') {
+                $filtros = $filtros." AND estado ='".$filters->estado."'";
             }
 		}
         return $filtros;
@@ -265,7 +289,9 @@ class Administracion_tasksController extends Administracion_mainController
         	Session::getInstance()->set($this->namepageactual,1);
             $parramsfilter = array();
 					$parramsfilter['nombre'] =  $this->_getSanitizedParam("nombre");
-					$parramsfilter['imagen'] =  $this->_getSanitizedParam("imagen");Session::getInstance()->set($this->namefilter, $parramsfilter);
+					$parramsfilter['descripcion'] =  $this->_getSanitizedParam("descripcion");
+					$parramsfilter['imagen'] =  $this->_getSanitizedParam("imagen");
+					$parramsfilter['estado'] =  $this->_getSanitizedParam("estado");Session::getInstance()->set($this->namefilter, $parramsfilter);
         }
         if ($this->_getSanitizedParam("cleanfilter") == 1) {
             Session::getInstance()->set($this->namefilter, '');

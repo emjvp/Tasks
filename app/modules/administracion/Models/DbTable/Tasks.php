@@ -23,8 +23,10 @@ class Administracion_Model_DbTable_Tasks extends Db_Table
 	 */
 	public function insert($data){
 		$nombre = $data['nombre'];
+		$descripcion = $data['descripcion'];
 		$imagen = $data['imagen'];
-		$query = "INSERT INTO tasks( nombre, imagen) VALUES ( '$nombre', '$imagen')";
+		$estado = $data['estado'];
+		$query = "INSERT INTO tasks( nombre, descripcion, imagen, estado) VALUES ( '$nombre', '$descripcion', '$imagen', '$estado')";
 		$res = $this->_conn->query($query);
         return mysqli_insert_id($this->_conn->getConnection());
 	}
@@ -38,8 +40,10 @@ class Administracion_Model_DbTable_Tasks extends Db_Table
 	public function update($data,$id){
 		
 		$nombre = $data['nombre'];
+		$descripcion = $data['descripcion'];
 		$imagen = $data['imagen'];
-		$query = "UPDATE tasks SET  nombre = '$nombre', imagen = '$imagen' WHERE id = '".$id."'";
+		$estado = $data['estado'];
+		$query = "UPDATE tasks SET  nombre = '$nombre', descripcion = '$descripcion', imagen = '$imagen', estado = '$estado' WHERE id = '".$id."'";
 		$res = $this->_conn->query($query);
 	}
 }

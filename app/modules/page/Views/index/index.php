@@ -5,7 +5,7 @@
 ?>
 <ul>
     <li><p><?php  echo $task->nombre ?></p>	</li>
-    <li><img src=<?php echo $task->imagen?> alt=""></li>
+    <li><img src="/images/<?php echo $task->imagen?>" alt=""></li>
 </ul>
     
 
